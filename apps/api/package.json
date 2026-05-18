@@ -6,7 +6,9 @@
     "dev": "tsx watch src/index.ts",
     "build": "tsc",
     "lint": "eslint src",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest"
   },
   "dependencies": {
     "@belgisiz-nomur/phone-utils": "workspace:*",
@@ -21,6 +23,7 @@
   "devDependencies": {
     "@types/node": "^22.15.18",
     "@types/pg": "^8.20.0",
-    "tsx": "^4.19.4"
+    "tsx": "^4.19.4",
+    "vitest": "^4.1.6"
   }
 }
