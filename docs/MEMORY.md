@@ -83,6 +83,15 @@ All API routes return snake_case fields. Key shapes:
 - `GET /stats` → `{ total_numbers, total_reports, total_votes, category_breakdown: Partial<Record<Category, number>> }`
 - `score` shape: `{ score: number, confidence: 'low'|'medium'|'high', report_count, spam_ratio }`
 
+## Phase 2.1 — Mobile Fixes Needed
+Tailwind responsive prefix approach (`sm:` breakpoint = 640px). No new dependencies needed.
+Known issues identified, not yet fixed:
+- **Navbar**: 5 links overflow on mobile → needs hamburger menu with `useState` toggle (already `'use client'`)
+- **Homepage stat cards**: `grid-cols-3` with no breakpoint → cards ~100px wide at 375px; fix with `gap-2 sm:gap-4`, `p-3 sm:p-4`
+- **List items**: missing `min-w-0` on number div → E.164 can't truncate against score badge
+- **ReportCard**: vote buttons on the right alongside content → stack on mobile with `flex-col sm:flex-row`
+- **Number detail header**: `justify-between` with long E.164 + badge → add `flex-wrap`
+
 ## Listing Endpoints Pattern (top-scammers, categories)
 Search endpoint cannot serve filtered/sorted lists — it only does substring match on e164.
 For any "list numbers by X" feature, add a dedicated route in the API.

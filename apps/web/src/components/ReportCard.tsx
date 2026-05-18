@@ -31,7 +31,7 @@ export function ReportCard({ report }: { report: Report }) {
 
   return (
     <div className="rounded-lg border border-gray-200 bg-white p-4 shadow-sm">
-      <div className="flex items-start justify-between gap-4">
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between sm:gap-4">
         <div className="flex-1">
           <span className="inline-block rounded bg-gray-100 px-2 py-0.5 text-xs font-medium text-gray-700">
             {t(`report.categories.${report.category}`)}
@@ -41,7 +41,7 @@ export function ReportCard({ report }: { report: Report }) {
           )}
           <p className="mt-2 text-xs text-gray-400">{formatDate(report.created_at)}</p>
         </div>
-        <div className="flex flex-col items-end gap-1">
+        <div className="flex items-center gap-2 sm:flex-col sm:items-end sm:gap-1">
           <div className="flex gap-2">
             <button
               onClick={() => handleVote(true)}

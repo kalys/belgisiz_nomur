@@ -57,12 +57,12 @@ export default async function CategoryPage({ params }: Props) {
             <Link
               key={num.e164}
               href={`/number/${encodeURIComponent(num.e164)}`}
-              className="flex items-center justify-between rounded-lg border border-gray-200 bg-white px-4 py-3 shadow-sm hover:border-blue-300"
+              className="flex min-w-0 items-center justify-between rounded-lg border border-gray-200 bg-white px-4 py-3 shadow-sm hover:border-blue-300"
             >
-              <div>
-                <span className="font-medium">{num.e164}</span>
+              <div className="min-w-0 flex-1">
+                <span className="block truncate font-medium">{num.e164}</span>
                 {num.carrier && (
-                  <span className="ml-2 text-sm text-gray-400">{num.carrier}</span>
+                  <span className="block truncate text-sm text-gray-400">{num.carrier}</span>
                 )}
               </div>
               <ScoreBadge score={num.score} />

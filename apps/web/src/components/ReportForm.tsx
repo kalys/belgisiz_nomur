@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { useRouter } from 'next/navigation'
 import { useTranslations } from 'next-intl'
 import type { Category } from '@/lib/api'
 import type { submitReport } from '@/app/[locale]/number/[e164]/actions'
@@ -22,6 +23,7 @@ export function ReportForm({
   action: typeof submitReport
 }) {
   const t = useTranslations('report')
+  const router = useRouter()
   const [category, setCategory] = useState<Category>('scam')
   const [comment, setComment] = useState('')
   const [status, setStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle')
@@ -33,6 +35,7 @@ export function ReportForm({
     if (result.ok) {
       setStatus('success')
       setComment('')
+      router.refresh()
     } else {
       setStatus('error')
     }

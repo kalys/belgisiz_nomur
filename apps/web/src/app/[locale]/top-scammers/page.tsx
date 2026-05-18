@@ -37,13 +37,13 @@ export default async function TopScammersPage({ params }: Props) {
             <Link
               key={num.e164}
               href={`/number/${encodeURIComponent(num.e164)}`}
-              className="flex items-center gap-4 rounded-lg border border-gray-200 bg-white px-4 py-3 shadow-sm hover:border-blue-300"
+              className="flex min-w-0 items-center gap-4 rounded-lg border border-gray-200 bg-white px-4 py-3 shadow-sm hover:border-blue-300"
             >
-              <span className="w-6 text-center text-sm font-semibold text-gray-400">{i + 1}</span>
-              <div className="flex-1">
-                <span className="font-medium">{num.e164}</span>
+              <span className="w-6 shrink-0 text-center text-sm font-semibold text-gray-400">{i + 1}</span>
+              <div className="min-w-0 flex-1">
+                <span className="block truncate font-medium">{num.e164}</span>
                 {num.carrier && (
-                  <span className="ml-2 text-sm text-gray-400">{num.carrier}</span>
+                  <span className="block truncate text-sm text-gray-400">{num.carrier}</span>
                 )}
               </div>
               <ScoreBadge score={num.score} />

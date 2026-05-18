@@ -28,7 +28,7 @@
   - `apps/api` routes: 22 tests
   - `apps/api` lib: 10 tests
 
-## Phase 2 — Web App 🔄
+## Phase 2 — Web App ✅
 - [x] Next.js 15 App Router setup
 - [x] Tailwind CSS v4 + postcss
 - [x] i18n with `next-intl` — Kyrgyz (`ky`) + Russian (`ru`)
@@ -40,8 +40,15 @@
 - [x] Manual test cases (`docs/web/testing/manual-test-cases.md`)
 - [x] Pages: `/about`, `/faq`
 - [x] Pages: `/categories` (index with counts), `/categories/[slug]` — dedicated `GET /categories/:category` API endpoint
-- [ ] SEO: structured data (JSON-LD)
-- [ ] Vote on reports UI
+- [x] SEO: structured data (JSON-LD) — `WebSite` + `SearchAction` on homepage, `WebPage` on number detail
+- [x] Vote on reports UI — `ReportCard` has helpful/not helpful buttons, optimistic count, dedup via `authorHash`
+
+## Phase 2.1 — Mobile View ✅
+- [x] Navbar: hamburger menu on mobile (5 links overflow on small screens)
+- [x] Homepage: `grid-cols-3` stat cards — too narrow at 375px, needs responsive sizing
+- [x] List items (search, top-scammers, categories): add `min-w-0` + truncation so number + badge don't overflow
+- [x] ReportCard: vote buttons cramped alongside content on narrow screens
+- [x] Number detail header: long E.164 + score badge side-by-side can overflow
 
 ## Phase 3 — Telegram Bot ⬜
 - [ ] grammy setup + webhook
