@@ -29,6 +29,9 @@ importers:
 
   apps/api:
     dependencies:
+      '@belgisiz-nomur/phone-utils':
+        specifier: workspace:*
+        version: link:../../packages/phone-utils
       '@prisma/adapter-pg':
         specifier: ^7.8.0
         version: 7.8.0
