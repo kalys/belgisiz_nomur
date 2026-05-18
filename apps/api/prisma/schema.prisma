@@ -1,0 +1,59 @@
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["driverAdapters"]
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Number {
+  id          String   @id @default(cuid())
+  e164        String   @unique
+  countryCode String
+  createdAt   DateTime @default(now())
+
+  reports Report[]
+
+  @@index([countryCode])
+  @@map("numbers")
+}
+
+model Report {
+  id         String         @id @default(cuid())
+  numberId   String
+  category   ReportCategory
+  comment    String?
+  authorHash String
+  ipHash     String
+  createdAt  DateTime       @default(now())
+
+  number Number  @relation(fields: [numberId], references: [id])
+  votes  Vote[]
+
+  @@index([numberId])
+  @@index([createdAt])
+  @@map("reports")
+}
+
+model Vote {
+  id         String   @id @default(cuid())
+  reportId   String
+  helpful    Boolean
+  authorHash String
+  createdAt  DateTime @default(now())
+
+  report Report @relation(fields: [reportId], references: [id])
+
+  @@unique([reportId, authorHash])
+  @@map("votes")
+}
+
+enum ReportCategory {
+  scam
+  spam
+  telemarketer
+  debt_collector
+  legitimate
+  unknown
+}

@@ -9,10 +9,16 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "fastify": "^5.3.2"
+    "@prisma/adapter-pg": "^7.8.0",
+    "@prisma/client": "^7.8.0",
+    "fastify": "^5.3.2",
+    "ioredis": "^5.10.1",
+    "pg": "^8.20.0",
+    "prisma": "^7.8.0"
   },
   "devDependencies": {
-    "tsx": "^4.19.4",
-    "@types/node": "^22.15.18"
+    "@types/node": "^22.15.18",
+    "@types/pg": "^8.20.0",
+    "tsx": "^4.19.4"
   }
 }
