@@ -21,11 +21,22 @@ export async function numberRoutes(app: FastifyInstance) {
     })
 
     if (!number) {
-      return { e164: normalized.e164, score: null }
+      return {
+        e164: normalized.e164,
+        carrier: null,
+        country_code: normalized.countryCode,
+        score: computeScore([]),
+        created_at: null,
+      }
     }
 
-    const score = computeScore(number.reports)
-    return { e164: number.e164, createdAt: number.createdAt, score }
+    return {
+      e164: number.e164,
+      carrier: null,
+      country_code: number.countryCode,
+      score: computeScore(number.reports),
+      created_at: number.createdAt.toISOString(),
+    }
   })
 
   // GET /numbers/:number/reports — paginated reports
@@ -59,12 +70,25 @@ export async function numberRoutes(app: FastifyInstance) {
           comment: true,
           createdAt: true,
           _count: { select: { votes: true } },
+          votes: { select: { helpful: true } },
         },
       }),
       prisma.report.count({ where: { numberId: number.id } }),
     ])
 
-    return { data: reports, total, page, limit }
+    return {
+      data: reports.map((r) => ({
+        id: r.id,
+        category: r.category,
+        comment: r.comment,
+        created_at: r.createdAt.toISOString(),
+        vote_count: r._count.votes,
+        helpful_count: r.votes.filter((v) => v.helpful).length,
+      })),
+      total,
+      page,
+      limit,
+    }
   })
 
   // POST /numbers/:number/reports — submit a report (5 per 10 min per IP)
@@ -82,10 +106,8 @@ export async function numberRoutes(app: FastifyInstance) {
       return reply.code(400).send({ error: `category must be one of: ${VALID_CATEGORIES.join(', ')}` })
     }
 
-    const ip = req.ip
-    const ua = req.headers['user-agent'] ?? ''
-    const ipHash = hashIp(ip)
-    const authorHash = hashAuthor(ip, ua)
+    const ipHash = hashIp(req.ip)
+    const authorHash = hashAuthor(req.ip, req.headers['user-agent'] ?? '')
 
     const number = await prisma.number.upsert({
       where: { e164: normalized.e164 },
@@ -104,6 +126,13 @@ export async function numberRoutes(app: FastifyInstance) {
       select: { id: true, category: true, comment: true, createdAt: true },
     })
 
-    return reply.code(201).send(report)
+    return reply.code(201).send({
+      id: report.id,
+      category: report.category,
+      comment: report.comment,
+      created_at: report.createdAt.toISOString(),
+      vote_count: 0,
+      helpful_count: 0,
+    })
   })
 }

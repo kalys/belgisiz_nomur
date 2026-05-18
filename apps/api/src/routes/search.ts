@@ -20,9 +20,14 @@ export async function searchRoutes(app: FastifyInstance) {
       include: { reports: { select: { category: true, createdAt: true } } },
     })
 
-    return numbers.map((n) => ({
-      e164: n.e164,
-      score: computeScore(n.reports),
-    }))
+    return {
+      data: numbers.map((n: (typeof numbers)[number]) => ({
+        e164: n.e164,
+        carrier: null,
+        country_code: n.countryCode,
+        score: computeScore(n.reports),
+        created_at: n.createdAt.toISOString(),
+      })),
+    }
   })
 }

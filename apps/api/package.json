@@ -2,6 +2,7 @@
   "name": "@belgisiz-nomur/api",
   "version": "0.1.0",
   "private": true,
+  "type": "module",
   "scripts": {
     "dev": "tsx watch src/index.ts",
     "build": "tsc",
@@ -12,6 +13,7 @@
   },
   "dependencies": {
     "@belgisiz-nomur/phone-utils": "workspace:*",
+    "@fastify/cors": "^10.0.2",
     "@fastify/rate-limit": "^10.3.0",
     "@prisma/adapter-pg": "^7.8.0",
     "@prisma/client": "^7.8.0",

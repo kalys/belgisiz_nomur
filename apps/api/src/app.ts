@@ -1,4 +1,5 @@
 import Fastify, { type FastifyInstance } from 'fastify'
+import cors from '@fastify/cors'
 import rateLimit from '@fastify/rate-limit'
 import { prisma } from './db.js'
 import { redis } from './redis.js'
@@ -9,6 +10,10 @@ import { statsRoutes } from './routes/stats.js'
 
 export async function buildApp(opts: { rateLimit: boolean } = { rateLimit: true }): Promise<FastifyInstance> {
   const app = Fastify({ logger: false })
+
+  await app.register(cors, {
+    origin: process.env.CORS_ORIGIN ?? true,
+  })
 
   app.get('/health', async () => {
     const [db, red] = await Promise.allSettled([

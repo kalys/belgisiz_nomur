@@ -1,7 +1,5 @@
-export default function Home() {
-  return (
-    <main>
-      <h1>Belgisiz Nomur</h1>
-    </main>
-  )
+import { redirect } from 'next/navigation'
+
+export default function Root() {
+  redirect('/ky')
 }

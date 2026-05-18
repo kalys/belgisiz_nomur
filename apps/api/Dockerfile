@@ -16,8 +16,13 @@ COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 RUN pnpm --filter @belgisiz-nomur/phone-utils build
 RUN pnpm --filter @belgisiz-nomur/config build
+RUN pnpm --filter @belgisiz-nomur/api exec prisma generate
 RUN pnpm --filter @belgisiz-nomur/api build
 RUN pnpm --filter @belgisiz-nomur/api deploy --prod --legacy /app/deploy
+# Copy schema + config so prisma generate works in the deploy dir
+COPY apps/api/prisma /app/deploy/prisma
+COPY apps/api/prisma.config.ts /app/deploy/prisma.config.ts
+RUN cd /app/deploy && node_modules/.bin/prisma generate
 
 FROM node:25-alpine AS runner
 WORKDIR /app
