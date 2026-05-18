@@ -1,0 +1,8 @@
+# Copy this file to config/<country_code>.yaml and fill in the values
+name: Your Instance Name
+country_code: "XXX"           # ITU country code without +
+languages: [xx]               # BCP 47 language codes
+default_language: xx
+phone_formats:
+  mobile: "+XXX XXXXXXXXX"
+  landline: "+XXX XXXXXXXXX"  # optional

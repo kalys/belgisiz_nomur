@@ -1,0 +1,7 @@
+name: Belgisiz Nomur
+country_code: "996"
+languages: [ky]
+default_language: ky
+phone_formats:
+  mobile: "+996 7XX XXX XXX"
+  landline: "+996 3XX XX XX XX"
