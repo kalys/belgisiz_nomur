@@ -59,6 +59,7 @@ export interface Stats {
   total_numbers: number
   total_reports: number
   total_votes: number
+  category_breakdown: Partial<Record<Category, number>>
 }
 
 export interface SearchResult {
@@ -98,5 +99,8 @@ export const api = {
   stats: () => apiFetch<Stats>('/stats'),
 
   topScammers: (limit = 20) =>
-    apiFetch<SearchResult>(`/search?q=&limit=${limit}`),
+    apiFetch<SearchResult>(`/top-scammers?limit=${limit}`),
+
+  categoryNumbers: (category: Category, limit = 20) =>
+    apiFetch<SearchResult>(`/categories/${category}?limit=${limit}`),
 }

@@ -10,6 +10,7 @@ export function Navbar() {
   const links = [
     { href: '/', label: t('home') },
     { href: '/top-scammers', label: t('topScammers') },
+    { href: '/categories', label: t('categories') },
     { href: '/about', label: t('about') },
     { href: '/faq', label: t('faq') },
   ]

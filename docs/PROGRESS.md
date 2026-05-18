@@ -17,7 +17,9 @@
   - `POST /numbers/:number/reports` — submit report
   - `POST /reports/:id/vote` — vote on report
   - `GET /search?q=` — search by number
-  - `GET /stats` — site-wide counts
+  - `GET /top-scammers?limit=` — top reported numbers
+  - `GET /categories/:category?limit=` — numbers by category
+  - `GET /stats` — site-wide counts with category breakdown
   - `GET /health` — DB + Redis ping
 - [x] Scoring algorithm (`src/lib/score.ts`)
 - [x] Rate limiting via `@fastify/rate-limit` + Redis
@@ -26,12 +28,20 @@
   - `apps/api` routes: 22 tests
   - `apps/api` lib: 10 tests
 
-## Phase 2 — Web App ⬜
-- [ ] Next.js 15 App Router setup
-- [ ] i18n with `next-intl` (Kyrgyz)
-- [ ] Pages: `/`, `/number/[e164]`, `/top-scammers`, `/categories/[slug]`, `/about`, `/faq`
-- [ ] SEO: SSR, structured data, sitemap
-- [ ] Submit report form
+## Phase 2 — Web App 🔄
+- [x] Next.js 15 App Router setup
+- [x] Tailwind CSS v4 + postcss
+- [x] i18n with `next-intl` — Kyrgyz (`ky`) + Russian (`ru`)
+- [x] Pages: `/` (homepage + stats), `/search`, `/number/[e164]` (lookup + reports)
+- [x] Page: `/top-scammers` — dedicated API endpoint (`GET /top-scammers`), ordered by report count
+- [x] Submit report form (Server Action, no CORS issues)
+- [x] `sitemap.ts`, `robots.ts`
+- [x] API fixes: snake_case contract, `{ data: [] }` search wrapper, stats shape
+- [x] Manual test cases (`docs/web/testing/manual-test-cases.md`)
+- [x] Pages: `/about`, `/faq`
+- [x] Pages: `/categories` (index with counts), `/categories/[slug]` — dedicated `GET /categories/:category` API endpoint
+- [ ] SEO: structured data (JSON-LD)
+- [ ] Vote on reports UI
 
 ## Phase 3 — Telegram Bot ⬜
 - [ ] grammy setup + webhook

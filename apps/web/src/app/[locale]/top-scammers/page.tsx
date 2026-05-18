@@ -16,9 +16,9 @@ export default async function TopScammersPage({ params }: Props) {
   const { locale } = await params
   const t = await getTranslations({ locale, namespace: 'topScammers' })
 
-  let results = { data: [] as Awaited<ReturnType<typeof api.search>>['data'] }
+  let results = { data: [] as Awaited<ReturnType<typeof api.topScammers>>['data'] }
   try {
-    results = await api.search('&sort=reports&limit=50')
+    results = await api.topScammers(50)
   } catch {
     // empty
   }

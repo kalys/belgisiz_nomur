@@ -7,6 +7,8 @@ import { numberRoutes } from './routes/numbers.js'
 import { voteRoutes } from './routes/votes.js'
 import { searchRoutes } from './routes/search.js'
 import { statsRoutes } from './routes/stats.js'
+import { topScammersRoutes } from './routes/top-scammers.js'
+import { categoryRoutes } from './routes/categories.js'
 
 export async function buildApp(opts: { rateLimit: boolean } = { rateLimit: true }): Promise<FastifyInstance> {
   const app = Fastify({ logger: false })
@@ -42,6 +44,8 @@ export async function buildApp(opts: { rateLimit: boolean } = { rateLimit: true 
   await app.register(voteRoutes)
   await app.register(searchRoutes)
   await app.register(statsRoutes)
+  await app.register(topScammersRoutes)
+  await app.register(categoryRoutes)
 
   return app
 }

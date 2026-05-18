@@ -18,6 +18,7 @@ type Props = { params: Promise<{ locale: string; slug: string }> }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale, slug } = await params
+  if (!VALID_CATEGORIES.includes(slug as Category)) return {}
   const t = await getTranslations({ locale, namespace: 'report' })
   return { title: t(`categories.${slug as Category}`) }
 }
@@ -30,20 +31,25 @@ export default async function CategoryPage({ params }: Props) {
   const t = await getTranslations({ locale, namespace: 'report' })
   const tCat = await getTranslations({ locale, namespace: 'categories' })
 
-  let results = { data: [] as Awaited<ReturnType<typeof api.search>>['data'] }
+  let results = { data: [] as Awaited<ReturnType<typeof api.categoryNumbers>>['data'] }
   try {
-    results = await api.search(`&category=${category}`)
+    results = await api.categoryNumbers(category, 50)
   } catch {
     // empty
   }
 
   return (
     <div>
-      <p className="mb-2 text-sm text-gray-400">{tCat('title')}</p>
+      <p className="mb-2 text-sm text-gray-400">
+        <Link href="/categories" className="hover:underline">
+          {tCat('title')}
+        </Link>
+        {' › '}
+      </p>
       <h1 className="mb-6 text-2xl font-bold">{t(`categories.${category}`)}</h1>
       {results.data.length === 0 ? (
         <div className="rounded-xl border border-gray-200 bg-white p-8 text-center text-gray-400">
-          —
+          {tCat('noResults')}
         </div>
       ) : (
         <div className="flex flex-col gap-3">

@@ -76,7 +76,10 @@
   },
   "categories": {
     "title": "По категориям",
-    "all": "Все"
+    "all": "Все",
+    "subtitle": "Выберите категорию",
+    "reportsCount": "{count} жалоб",
+    "noResults": "В этой категории жалоб нет"
   },
   "about": {
     "title": "О нас",
