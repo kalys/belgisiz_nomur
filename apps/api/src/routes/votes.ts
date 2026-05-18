@@ -3,11 +3,11 @@ import { prisma } from '../db.js'
 import { hashAuthor } from '../lib/fingerprint.js'
 
 export async function voteRoutes(app: FastifyInstance) {
-  // POST /reports/:id/vote
+  // POST /reports/:id/vote (20 per 10 min per IP)
   app.post<{
     Params: { id: string }
     Body: { helpful: boolean }
-  }>('/reports/:id/vote', async (req, reply) => {
+  }>('/reports/:id/vote', { config: { rateLimit: { max: 20, timeWindow: '10 minutes' } } }, async (req, reply) => {
     const { id } = req.params
     const { helpful } = req.body ?? {}
 

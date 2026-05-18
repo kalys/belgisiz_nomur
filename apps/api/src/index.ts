@@ -1,4 +1,5 @@
 import Fastify from 'fastify'
+import rateLimit from '@fastify/rate-limit'
 import { prisma } from './db.js'
 import { redis } from './redis.js'
 import { numberRoutes } from './routes/numbers.js'
@@ -22,6 +23,19 @@ app.get('/health', async () => {
 })
 
 const start = async () => {
+  // Global rate limit: 60 requests/minute per IP for read routes
+  await app.register(rateLimit, {
+    global: true,
+    max: 60,
+    timeWindow: '1 minute',
+    redis,
+    keyGenerator: (req) => req.ip,
+    errorResponseBuilder: () => ({
+      error: 'Too many requests',
+      retryAfter: 60,
+    }),
+  })
+
   await app.register(numberRoutes)
   await app.register(voteRoutes)
   await app.register(searchRoutes)

@@ -67,11 +67,11 @@ export async function numberRoutes(app: FastifyInstance) {
     return { data: reports, total, page, limit }
   })
 
-  // POST /numbers/:number/reports — submit a report
+  // POST /numbers/:number/reports — submit a report (5 per 10 min per IP)
   app.post<{
     Params: { number: string }
     Body: { category: string; comment?: string }
-  }>('/numbers/:number/reports', async (req, reply) => {
+  }>('/numbers/:number/reports', { config: { rateLimit: { max: 5, timeWindow: '10 minutes' } } }, async (req, reply) => {
     const normalized = normalizePhone(req.params.number)
     if (!normalized) {
       return reply.code(400).send({ error: 'Invalid phone number' })
