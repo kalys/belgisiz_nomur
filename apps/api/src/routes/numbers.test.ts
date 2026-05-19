@@ -38,6 +38,7 @@ describe('GET /numbers/:number', () => {
       mockPrisma.number.findUnique.mockResolvedValue({
         id: '1',
         e164: '+996700123456',
+        countryCode: '996',
         createdAt: new Date('2026-01-01'),
         reports: [{ category: 'scam', createdAt: new Date() }],
       })
@@ -47,18 +48,21 @@ describe('GET /numbers/:number', () => {
       expect(res.statusCode).toBe(200)
       const body = res.json()
       expect(body.e164).toBe('+996700123456')
-      expect(body.score.total).toBe(1)
-      expect(body.score.topCategory).toBe('scam')
+      expect(body.score.report_count).toBe(1)
+      expect(body.score.spam_ratio).toBe(1)
     })
 
-    it('returns null score for unknown number', async () => {
+    it('returns empty score for unknown number', async () => {
       const app = await buildApp({ rateLimit: false })
       mockPrisma.number.findUnique.mockResolvedValue(null)
 
       const res = await app.inject({ method: 'GET', url: '/numbers/0700123456' })
 
       expect(res.statusCode).toBe(200)
-      expect(res.json()).toEqual({ e164: '+996700123456', score: null })
+      const body = res.json()
+      expect(body.e164).toBe('+996700123456')
+      expect(body.score.report_count).toBe(0)
+      expect(body.score.confidence).toBe('low')
     })
   })
 
@@ -82,7 +86,7 @@ describe('GET /numbers/:number/reports', () => {
       const app = await buildApp({ rateLimit: false })
       mockPrisma.number.findUnique.mockResolvedValue({ id: '1', e164: '+996700123456' })
       mockPrisma.$transaction.mockResolvedValue([
-        [{ id: 'r1', category: 'scam', comment: 'Test', createdAt: new Date(), _count: { votes: 2 } }],
+        [{ id: 'r1', category: 'scam', comment: 'Test', createdAt: new Date(), _count: { votes: 2 }, votes: [{ helpful: true }, { helpful: false }] }],
         1,
       ])
 

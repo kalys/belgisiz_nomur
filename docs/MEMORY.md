@@ -83,14 +83,12 @@ All API routes return snake_case fields. Key shapes:
 - `GET /stats` → `{ total_numbers, total_reports, total_votes, category_breakdown: Partial<Record<Category, number>> }`
 - `score` shape: `{ score: number, confidence: 'low'|'medium'|'high', report_count, spam_ratio }`
 
-## Phase 2.1 — Mobile Fixes Needed
-Tailwind responsive prefix approach (`sm:` breakpoint = 640px). No new dependencies needed.
-Known issues identified, not yet fixed:
-- **Navbar**: 5 links overflow on mobile → needs hamburger menu with `useState` toggle (already `'use client'`)
-- **Homepage stat cards**: `grid-cols-3` with no breakpoint → cards ~100px wide at 375px; fix with `gap-2 sm:gap-4`, `p-3 sm:p-4`
-- **List items**: missing `min-w-0` on number div → E.164 can't truncate against score badge
-- **ReportCard**: vote buttons on the right alongside content → stack on mobile with `flex-col sm:flex-row`
-- **Number detail header**: `justify-between` with long E.164 + badge → add `flex-wrap`
+## Bot (Phase 3)
+- **Dev:** `pnpm --filter @belgisiz-nomur/bot dev` — requires `apps/bot/.env` with `TELEGRAM_BOT_TOKEN`
+- **Env loading:** `tsx watch --env-file=.env src/index.ts` (Node 20+ `--env-file` flag, after `watch` subcommand)
+- **Report flow:** in-memory `Map<chatId, session>` — lost on restart, acceptable for now
+- **Webhook mode:** set `BOT_WEBHOOK_URL` in `.env`; bot starts an HTTP server on `BOT_PORT` (default 3002)
+- **Inline mode:** must be enabled in BotFather (`/setinline`)
 
 ## Listing Endpoints Pattern (top-scammers, categories)
 Search endpoint cannot serve filtered/sorted lists — it only does substring match on e164.
@@ -109,11 +107,12 @@ RUN cd /app/deploy && node_modules/.bin/prisma generate
 Note: `.bin/prisma` is a shell script — do NOT prefix with `node`.
 
 ## Local Dev
-Keep postgres + redis in Docker, run API and web directly for hot-reload:
+Keep postgres + redis in Docker, run API/web/bot directly for hot-reload:
 ```bash
-docker compose stop api
 pnpm --filter @belgisiz-nomur/api dev   # tsx watch, port 3001
 pnpm --filter @belgisiz-nomur/web dev   # Next.js, port 3000
+pnpm --filter @belgisiz-nomur/bot dev   # tsx watch + long polling
 ```
 API `.env` already points to Docker ports (5433, 6380) so it just works.
 Web `.env.local` points to `http://localhost:3001` for both server and client API calls.
+Bot `apps/bot/.env` needs `TELEGRAM_BOT_TOKEN` and `API_URL=http://localhost:3001`.

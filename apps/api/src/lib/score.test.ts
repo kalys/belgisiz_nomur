@@ -12,9 +12,10 @@ describe('computeScore', () => {
         { category: 'spam', createdAt: d },
       ])
 
-      expect(result.total).toBe(3)
-      expect(result.topCategory).toBe('scam')
-      expect(result.categoryBreakdown).toEqual({ scam: 2, spam: 1 })
+      expect(result.report_count).toBe(3)
+      // all three are SCAM_LIKE → spam_ratio = 1.0, score = 0
+      expect(result.spam_ratio).toBe(1)
+      expect(result.score).toBe(0)
       expect(result.confidence).toBe('medium')
     })
 
@@ -38,32 +39,34 @@ describe('computeScore', () => {
   })
 
   describe('edge cases', () => {
-    it('returns null topCategory for empty reports', () => {
+    it('returns zero score for empty reports', () => {
       const result = computeScore([])
 
-      expect(result.total).toBe(0)
-      expect(result.topCategory).toBeNull()
-      expect(result.categoryBreakdown).toEqual({})
+      expect(result.report_count).toBe(0)
+      expect(result.score).toBe(0)
+      expect(result.spam_ratio).toBe(0)
       expect(result.confidence).toBe('low')
     })
 
-    it('returns the single category as top for one report', () => {
+    it('returns score=100 for a single legitimate report', () => {
       const result = computeScore([{ category: 'legitimate', createdAt: d }])
 
-      expect(result.topCategory).toBe('legitimate')
-      expect(result.categoryBreakdown).toEqual({ legitimate: 1 })
+      // legitimate is not SCAM_LIKE → spam_ratio = 0, score = 100
+      expect(result.spam_ratio).toBe(0)
+      expect(result.score).toBe(100)
+      expect(result.report_count).toBe(1)
     })
 
-    it('returns first-encountered category on tie', () => {
-      // When two categories are tied, the one iterated first wins
+    it('returns score=0 for scam + spam tie', () => {
       const result = computeScore([
         { category: 'scam', createdAt: d },
         { category: 'spam', createdAt: d },
       ])
 
-      expect(result.total).toBe(2)
-      // Both have count 1 — topCategory is whichever comes first in Object.entries
-      expect(['scam', 'spam']).toContain(result.topCategory)
+      // both SCAM_LIKE → spam_ratio = 1.0
+      expect(result.report_count).toBe(2)
+      expect(result.spam_ratio).toBe(1)
+      expect(result.score).toBe(0)
     })
 
     it('handles all report categories', () => {
@@ -77,8 +80,10 @@ describe('computeScore', () => {
       ]
 
       const result = computeScore(reports)
-      expect(result.total).toBe(6)
-      expect(Object.keys(result.categoryBreakdown)).toHaveLength(6)
+      // scam, spam, debt_collector are SCAM_LIKE → 3/6 = 0.5
+      expect(result.report_count).toBe(6)
+      expect(result.spam_ratio).toBe(0.5)
+      expect(result.score).toBe(50)
     })
 
     it('confidence boundary: exactly 3 reports is medium', () => {

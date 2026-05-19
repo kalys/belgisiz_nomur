@@ -27,6 +27,8 @@ describe('GET /search', () => {
       mockPrisma.number.findMany.mockResolvedValue([
         {
           e164: '+996700123456',
+          countryCode: '996',
+          createdAt: new Date('2026-01-01'),
           reports: [
             { category: 'scam', createdAt: new Date() },
             { category: 'scam', createdAt: new Date() },
@@ -38,19 +40,20 @@ describe('GET /search', () => {
 
       expect(res.statusCode).toBe(200)
       const body = res.json()
-      expect(body).toHaveLength(1)
-      expect(body[0].e164).toBe('+996700123456')
-      expect(body[0].score.topCategory).toBe('scam')
+      expect(body.data).toHaveLength(1)
+      expect(body.data[0].e164).toBe('+996700123456')
+      expect(body.data[0].score.report_count).toBe(2)
+      expect(body.data[0].score.spam_ratio).toBe(1)
     })
 
-    it('returns empty array when no numbers match', async () => {
+    it('returns empty data array when no numbers match', async () => {
       const app = await buildApp({ rateLimit: false })
       mockPrisma.number.findMany.mockResolvedValue([])
 
       const res = await app.inject({ method: 'GET', url: '/search?q=0999' })
 
       expect(res.statusCode).toBe(200)
-      expect(res.json()).toEqual([])
+      expect(res.json()).toEqual({ data: [] })
     })
   })
 

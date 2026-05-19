@@ -2,13 +2,15 @@
   "name": "@belgisiz-nomur/bot",
   "version": "0.1.0",
   "private": true,
+  "type": "module",
   "scripts": {
-    "dev": "tsx watch src/index.ts",
+    "dev": "tsx watch --env-file=.env src/index.ts",
     "build": "tsc",
     "lint": "eslint src",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
+    "@belgisiz-nomur/phone-utils": "workspace:*",
     "grammy": "^1.36.3"
   },
   "devDependencies": {

@@ -72,6 +72,9 @@ importers:
 
   apps/bot:
     dependencies:
+      '@belgisiz-nomur/phone-utils':
+        specifier: workspace:*
+        version: link:../../packages/phone-utils
       grammy:
         specifier: ^1.36.3
         version: 1.43.0

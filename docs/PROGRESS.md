@@ -50,26 +50,23 @@
 - [x] ReportCard: vote buttons cramped alongside content on narrow screens
 - [x] Number detail header: long E.164 + score badge side-by-side can overflow
 
-## Phase 3 — Telegram Bot ⬜
-- [ ] grammy setup + webhook
-- [ ] `/start`, `/check`, `/report` commands
-- [ ] Inline mode
+## Phase 3 — Telegram Bot ✅
+- [x] grammy setup + webhook (long polling in dev, HTTP webhook server in prod via `BOT_WEBHOOK_URL`)
+- [x] `/start`, `/check`, `/report` commands + bare number messages
+- [x] Inline mode (`@bot 0700123456` → article result)
 
-## Phase 4 — React Native App ⬜
-- [ ] Expo + Expo Router
-- [ ] Search, number detail, submit report screens
-- [ ] Call log integration
-- [ ] Push notifications
-- [ ] Offline cache
+## Phase 4 — React Native App ⏭ Deferred
+Too much work relative to value; web + bot already cover the use case.
 
-## Phase 5 — Self-Hosting & Open Source ⬜
-- [ ] `SELF_HOSTING.md`
-- [ ] GitHub Actions CI
-- [ ] API docs (Swagger)
-- [ ] Contributing guide
+## Phase 5 — Self-Hosting & Open Source ✅ (partial)
+- [x] `SELF_HOSTING.md`
+- [x] GitHub Actions CI (`.github/workflows/ci.yml` — lint, typecheck, test on push/PR)
+- [x] Fixed 12 stale tests (score shape drift + snake_case API contract drift)
+- [ ] API docs (Swagger) — deferred
+- [ ] Contributing guide — deferred
 
 ## Phase 6 — Launch ⬜
 - [ ] Deploy to Railway / Fly.io
-- [ ] Register Telegram bot
-- [ ] App Store + Google Play submission
+- [ ] Register Telegram bot (`@BelgisizNomurBot`) + set webhook
 - [ ] Seed known scam numbers
+- [ ] Post in Kyrgyz tech communities / Telegram channels
