@@ -1,0 +1,14 @@
+{
+    email {$ADMIN_EMAIL}
+}
+
+{$DOMAIN} {
+    handle /bot {
+        reverse_proxy bot:3002
+    }
+    reverse_proxy web:3000
+}
+
+api.{$DOMAIN} {
+    reverse_proxy api:3001
+}

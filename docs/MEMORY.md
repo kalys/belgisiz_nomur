@@ -106,6 +106,16 @@ RUN cd /app/deploy && node_modules/.bin/prisma generate
 ```
 Note: `.bin/prisma` is a shell script — do NOT prefix with `node`.
 
+## Production Deployment
+- **Host:** $5/mo DigitalOcean droplet (1 vCPU, 1 GB RAM)
+- **Stack:** Docker Compose for all services + Caddy as reverse proxy (handles Let's Encrypt automatically)
+- **Services in compose:** postgres, redis, api, web, bot, caddy
+- **Routing:** `domain.com` → web:3000 · `domain.com/api` → api:3001 · `domain.com/bot` → bot:3002
+- **RAM constraint:** Next.js build uses 500–700 MB — too much for the droplet. Build Docker images in GitHub Actions and push to GitHub Container Registry (free); droplet only pulls pre-built images, never builds.
+- **Bot in prod:** webhook mode (`BOT_WEBHOOK_URL=https://domain.com/bot`); bot registers the webhook with Telegram on startup. Long polling only for local dev.
+- **Migrations:** `docker compose exec api npx prisma migrate deploy` — run manually after deploy if schema changed.
+- **Still needed:** `apps/web/Dockerfile`, `apps/bot/Dockerfile`, updated `docker-compose.yml`, `Caddyfile`, CI build-and-push workflow.
+
 ## Local Dev
 Keep postgres + redis in Docker, run API/web/bot directly for hot-reload:
 ```bash

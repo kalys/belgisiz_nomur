@@ -6,7 +6,7 @@ services:
       POSTGRES_PASSWORD: belgisiz
       POSTGRES_DB: belgisiz_nomur
     ports:
-      - "5433:5432"
+      - "127.0.0.1:5433:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
     healthcheck:
@@ -18,7 +18,7 @@ services:
   redis:
     image: redis:7-alpine
     ports:
-      - "6380:6379"
+      - "127.0.0.1:6380:6379"
     healthcheck:
       test: ["CMD", "redis-cli", "ping"]
       interval: 5s
@@ -26,11 +26,9 @@ services:
       retries: 5
 
   api:
-    build:
-      context: .
-      dockerfile: apps/api/Dockerfile
+    image: ${IMAGE_REGISTRY}/api:${TAG:-latest}
     ports:
-      - "3001:3001"
+      - "127.0.0.1:3001:3001"
     environment:
       DATABASE_URL: postgres://belgisiz:belgisiz@postgres:5432/belgisiz_nomur
       REDIS_URL: redis://redis:6379
@@ -43,5 +41,43 @@ services:
       redis:
         condition: service_healthy
 
+  web:
+    image: ${IMAGE_REGISTRY}/web:${TAG:-latest}
+    environment:
+      API_URL: http://api:3001
+    depends_on:
+      - api
+
+  bot:
+    image: ${IMAGE_REGISTRY}/bot:${TAG:-latest}
+    environment:
+      TELEGRAM_BOT_TOKEN: ${TELEGRAM_BOT_TOKEN}
+      API_URL: http://api:3001
+      SITE_URL: ${SITE_URL}
+      BOT_WEBHOOK_URL: ${BOT_WEBHOOK_URL}
+      BOT_PORT: "3002"
+    depends_on:
+      - api
+
+  caddy:
+    image: caddy:2-alpine
+    ports:
+      - "80:80"
+      - "443:443"
+      - "443:443/udp"
+    environment:
+      DOMAIN: ${DOMAIN}
+      ADMIN_EMAIL: ${ADMIN_EMAIL}
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+      - caddy_config:/config
+    depends_on:
+      - web
+      - api
+      - bot
+
 volumes:
   postgres_data:
+  caddy_data:
+  caddy_config:

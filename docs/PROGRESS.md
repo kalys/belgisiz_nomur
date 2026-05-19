@@ -66,7 +66,28 @@ Too much work relative to value; web + bot already cover the use case.
 - [ ] Contributing guide — deferred
 
 ## Phase 6 — Launch ⬜
-- [ ] Deploy to Railway / Fly.io
-- [ ] Register Telegram bot (`@BelgisizNomurBot`) + set webhook
+
+**Target: $5/mo DigitalOcean droplet (1 vCPU, 1 GB RAM). All services on one machine via Docker Compose + Caddy.**
+
+### 6.1 — Infrastructure prep ✅
+- [x] `apps/web/Dockerfile` — standalone Next.js build (node:25-alpine, multi-stage)
+- [x] `apps/bot/Dockerfile` — production bot (webhook mode, pnpm deploy)
+- [x] `docker-compose.yml` (prod) — all services with GHCR images + Caddy; postgres/redis bound to 127.0.0.1
+- [x] `docker-compose.dev.yml` — local dev (postgres:5433, redis:6380, api only)
+- [x] `Caddyfile` — `{$DOMAIN}` → web, `api.{$DOMAIN}` → api, `/bot` → bot; auto HTTPS via Let's Encrypt
+- [x] `.github/workflows/publish.yml` — builds api/web/bot images and pushes to GHCR on merge to main
+- [x] `.env.example` — production env var template
+- [x] `apps/web/next.config.ts` — added `output: standalone` + `outputFileTracingRoot`
+
+### 6.2 — Server setup ⬜
+- [ ] Provision droplet, point DNS
+- [ ] Install Docker + Docker Compose on droplet
+- [ ] Clone repo, create `.env` files
+- [ ] `docker compose pull && docker compose up -d`
+- [ ] `docker compose exec api npx prisma migrate deploy`
+
+### 6.3 — Bot & content ⬜
+- [ ] Register `@BelgisizNomurBot` in BotFather, enable inline mode (`/setinline`)
+- [ ] Set `BOT_WEBHOOK_URL=https://domain.com/bot` — bot registers webhook on startup
 - [ ] Seed known scam numbers
 - [ ] Post in Kyrgyz tech communities / Telegram channels
