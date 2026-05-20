@@ -99,7 +99,7 @@ GET  /stats                    → site-wide stats
 ```
 
 **Inline mode:**
-- Type `@BelgisizNomurBot 0700123456` in any chat
+- Type `@belgisiz_nomer_bot 0700123456` in any chat
 - Returns summary card inline
 
 **Flow:**
@@ -149,7 +149,7 @@ Bot: 📞 +996 700 123 456
 ## Phase 6 — Launch (Week 12)
 
 - Deploy API + Web on Railway or Fly.io
-- Register Telegram bot (`@BelgisizNomurBot`)
+- Register Telegram bot (`@belgisiz_nomer_bot`)
 - Submit to App Store + Google Play
 - Seed with known scam numbers (publicly available KG scam lists)
 - Post in Kyrgyz tech communities, Telegram channels

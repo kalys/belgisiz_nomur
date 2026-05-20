@@ -87,7 +87,7 @@ Too much work relative to value; web + bot already cover the use case.
 - [ ] `docker compose exec api npx prisma migrate deploy`
 
 ### 6.3 — Bot & content ⬜
-- [ ] Register `@BelgisizNomurBot` in BotFather, enable inline mode (`/setinline`)
+- [ ] Register `@belgisiz_nomer_bot` in BotFather, enable inline mode (`/setinline`)
 - [ ] Set `BOT_WEBHOOK_URL=https://domain.com/bot` — bot registers webhook on startup
 - [ ] Seed known scam numbers
 - [ ] Post in Kyrgyz tech communities / Telegram channels

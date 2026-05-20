@@ -1,0 +1,97 @@
+{
+  "site": {
+    "name": "Belgisiz Nomur",
+    "tagline": "Phone number reputation for Kyrgyzstan"
+  },
+  "nav": {
+    "home": "Home",
+    "topScammers": "Top Scammers",
+    "categories": "Categories",
+    "about": "About",
+    "faq": "FAQ"
+  },
+  "search": {
+    "placeholder": "Search number... e.g. 0700 123 456",
+    "button": "Search",
+    "title": "Search results",
+    "noResults": "No results found",
+    "noResultsHint": "Try a different format"
+  },
+  "home": {
+    "heroTitle": "Look up an unknown number",
+    "heroSubtitle": "Community reports on scam and spam calls in Kyrgyzstan",
+    "statsTitle": "Statistics",
+    "totalNumbers": "Numbers",
+    "totalReports": "Reports",
+    "totalVotes": "Votes",
+    "recentTitle": "Recent reports",
+    "viewTopScammers": "View top scammers"
+  },
+  "number": {
+    "title": "Number",
+    "carrier": "Carrier",
+    "firstSeen": "First report",
+    "reportCount": "{count} reports",
+    "noReports": "No reports for this number",
+    "beFirst": "Be the first to leave a report",
+    "reportsTitle": "Reports",
+    "submitReport": "Submit a report"
+  },
+  "score": {
+    "dangerous": "Dangerous",
+    "suspicious": "Suspicious",
+    "safe": "Safe",
+    "unknown": "Unknown",
+    "confidence": {
+      "low": "low data",
+      "medium": "medium confidence",
+      "high": "high confidence"
+    }
+  },
+  "report": {
+    "category": "Category",
+    "comment": "Comment (optional)",
+    "commentPlaceholder": "Additional information...",
+    "submit": "Submit",
+    "submitting": "Submitting...",
+    "success": "Report submitted",
+    "error": "Something went wrong, please try again",
+    "categories": {
+      "scam": "Scam",
+      "spam": "Spam",
+      "telemarketer": "Telemarketer",
+      "debt_collector": "Debt collector",
+      "legitimate": "Legitimate",
+      "unknown": "Unknown"
+    }
+  },
+  "vote": {
+    "helpful": "Helpful",
+    "notHelpful": "Not helpful",
+    "votes": "{count} votes"
+  },
+  "topScammers": {
+    "title": "Top scammers",
+    "subtitle": "Numbers with the most reports"
+  },
+  "categories": {
+    "title": "By category",
+    "all": "All",
+    "subtitle": "Select a category",
+    "reportsCount": "{count} reports",
+    "noResults": "No reports in this category"
+  },
+  "about": {
+    "title": "About",
+    "body": "Belgisiz Nomur is an open-source platform for checking phone number reputation in Kyrgyzstan. Our goal is to protect people from scam and spam calls."
+  },
+  "faq": {
+    "title": "Frequently asked questions",
+    "q1": "How do I submit a report?",
+    "a1": "Search for the number and click \"Submit a report\".",
+    "q2": "How accurate is the data?",
+    "a2": "Data is based on community reports. The confidence level depends on the number of reports.",
+    "q3": "Is any personal data stored?",
+    "a3": "No. We only store a hash of your IP address; no other data is retained."
+  }
+}

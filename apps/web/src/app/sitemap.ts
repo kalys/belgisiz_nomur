@@ -1,8 +1,9 @@
 import type { MetadataRoute } from 'next'
 import { api } from '@/lib/api'
+import { routing } from '@/i18n/routing'
 
-const BASE = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://belgisiznomur.kg'
-const LOCALES = ['ky', 'ru']
+const BASE = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://bn.osmonov.com'
+const LOCALES = routing.locales
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const staticRoutes = ['', '/top-scammers', '/about', '/faq']

@@ -1,6 +1,6 @@
 name: Belgisiz Nomur
 country_code: "996"
-languages: [ky]
+languages: [ky, en]
 default_language: ky
 phone_formats:
   mobile: "+996 7XX XXX XXX"

@@ -2,7 +2,7 @@
 
 Phone number reputation service for Kyrgyzstan. Look up whether a number is a scammer, spammer, or telemarketer — and report ones that are.
 
-**Live at:** bn.osmonov.com · **Telegram bot:** @BelgisizNomurBot
+**Live at:** bn.osmonov.com · **Telegram bot:** @belgisiz_nomer_bot
 
 ---
 
@@ -13,7 +13,7 @@ Phone number reputation service for Kyrgyzstan. Look up whether a number is a sc
 - Score + confidence level based on report volume and recency
 - Helpful/not helpful voting on reports
 - Kyrgyz and Russian UI
-- Telegram bot: `/check`, `/report`, inline mode (`@BelgisizNomurBot 0700123456`)
+- Telegram bot: `/check`, `/report`, inline mode (`@belgisiz_nomer_bot 0700123456`)
 - Self-hostable for any country (see [SELF_HOSTING.md](./SELF_HOSTING.md))
 
 ## Stack
