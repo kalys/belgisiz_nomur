@@ -1,6 +1,6 @@
 import type { PhoneNumber, Category } from './api.js'
 
-const SITE_URL = process.env.SITE_URL ?? 'https://belgisiznomer.kg'
+const SITE_URL = process.env.SITE_URL ?? 'https://bn.osmonov.com'
 
 export const CATEGORY_LABELS: Record<Category, string> = {
   scam: 'Алдамчылык',

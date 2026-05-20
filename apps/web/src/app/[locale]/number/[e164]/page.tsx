@@ -35,7 +35,7 @@ export default async function NumberPage({ params }: Props) {
     // If completely invalid number, still show the page with empty state
   }
 
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://belgisiznomer.kg'
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://bn.osmonov.com'
   const tSite = await getTranslations({ locale, namespace: 'site' })
   const jsonLd = {
     '@context': 'https://schema.org',

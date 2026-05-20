@@ -23,7 +23,7 @@ export default async function HomePage({
   const t = await getTranslations({ locale, namespace: 'home' })
   const tSite = await getTranslations({ locale, namespace: 'site' })
 
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://belgisiznomer.kg'
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://bn.osmonov.com'
   const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'WebSite',
