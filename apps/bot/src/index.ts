@@ -18,7 +18,7 @@ const sessions = new Map<number, ReportSession>()
 
 // --- Helpers ---
 
-async function lookupAndReply(ctx: { chatId: number; reply: Function }, input: string) {
+async function lookupAndReply(ctx: { chatId: number; reply: (text: string, options?: Record<string, unknown>) => Promise<unknown> }, input: string) {
   const normalized = normalizePhone(input)
   if (!normalized) {
     return ctx.reply('❌ Номер таанылган жок. Мисал: 0700123456 же +996700123456')
