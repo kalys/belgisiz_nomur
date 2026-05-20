@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import { useTranslations } from 'next-intl'
 import { Link, usePathname } from '@/i18n/navigation'
+import { LocaleSwitcher } from './LocaleSwitcher'
 
 export function Navbar() {
   const t = useTranslations('nav')
@@ -33,6 +34,7 @@ export function Navbar() {
               {label}
             </Link>
           ))}
+          <LocaleSwitcher />
         </nav>
         <button
           className="p-2 text-gray-600 hover:text-gray-900 sm:hidden"
@@ -62,6 +64,9 @@ export function Navbar() {
               {label}
             </Link>
           ))}
+          <div className="mt-2 border-t border-gray-100 pt-2">
+            <LocaleSwitcher />
+          </div>
         </nav>
       )}
     </header>
